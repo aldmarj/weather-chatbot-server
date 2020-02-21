@@ -7,19 +7,11 @@ require('dotenv').config({ path: 'variables.env' });
 
     const app = express();
 
-    // Set up a whitelist and check against it:
-    var whitelist = ['http://aldmar.com']
-    var corsOptions = {
-      origin: function (origin, callback) {
-        if (whitelist.indexOf(origin) !== -1) {
-          callback(null, true)
-        } else {
-          callback(new Error('Not allowed by CORS'))
-        }
-      }
-    }
+  
 
-    app.use(cors(corsOptions));
+    app.use(cors({
+      credentials: true,
+    }));
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
     
