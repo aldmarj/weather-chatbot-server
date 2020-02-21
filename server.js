@@ -8,6 +8,7 @@ require('dotenv').config({ path: 'variables.env' });
     const app = express();
 
     var allowedOrigins = ['http://aldmar.com',
+                      'https://aldmar.com',
                       'http://localhost:8000',
                       'http://localhost:3000'];
 
