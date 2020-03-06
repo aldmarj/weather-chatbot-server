@@ -6,12 +6,14 @@ require('dotenv').config({ path: 'variables.env' });
     const processMessage = require('./process-message');
 
     const app = express();
-    
-    app.use(cors());
+    app.use((req, res, next) => {
+      res.header('Access-Control-Allow-Origin', '*');
+      next();
+    });
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
 
-    app.options('/chat', cors());
+    app.options('/chat', cors())
     
     app.get('/', function (req, res) {
       res.send(JSON.stringify({ Hello: 'anyone?'}));
