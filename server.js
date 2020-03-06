@@ -6,14 +6,22 @@ require('dotenv').config({ path: 'variables.env' });
     const processMessage = require('./process-message');
 
     const app = express();
-    app.use((req, res, next) => {
-      res.header('Access-Control-Allow-Origin', '*');
-      next();
-    });
+    
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
+    app.use((req, res, next) => {
+          res.header('Access-Control-Allow-Origin', '*');
+          res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
 
-    app.options('/chat', cors())
+          if (req.method === 'OPTIONS'){
+            res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
+            return res.status(200).json({});
+          }
+
+          next();
+      });
+
+    //app.options('/chat', cors())
     
     app.get('/', function (req, res) {
       res.send(JSON.stringify({ Hello: 'anyone?'}));
